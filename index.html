@@ -15,13 +15,17 @@
 
       <form action="get" class="new-comment">
         <label class="comment-label">
-          <input class="name-input" placeholder="write username here" name="name" type="text" pattern="/^[a-z0-9_-]{3,16}$/" required />
+          <input class="name-input" placeholder="write username here" name="name" type="text" required autocomplete="off" />
+          <span class="error" hidden="true">Tell us your name, pleace</span>
         </label>
         <label class="comment-label">
           <input class="date-input" name="date" type="date" />
         </label>
         <label class="comment-label">
           <textarea class="comment-input" placeholder="write comment here" name="comment-text"></textarea>
+          <span class="error" hidden="true"
+            >Our server don't like empty comments. Pleace, write something, otherwise he can go bananza and call T-1000</span
+          >
         </label>
         <p><button type="submit" class="comment-submit">Отправить</button></p>
       </form>

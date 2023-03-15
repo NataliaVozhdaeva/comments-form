@@ -185,3 +185,8 @@ button {
 .comment-label {
   width: 100%;
 }
+
+.error {
+  color: black;
+  text-shadow: 0 0 2px salmon;
+}
