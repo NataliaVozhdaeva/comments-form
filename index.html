@@ -5,31 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Comments</title>
-
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
-      integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
-      crossorigin="anonymous" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <section class="comments-wrap">
-      <h3 class="comments-title">Comments <span class="comments-count">0</span></h3>
+      <h3 class="comments-title">Comments <span class="comments-count"></span></h3>
 
-      <ul class="comments-list">
-        <li class="comment">
-          <div>
-            <p class="comment-text">Bla-bla-bla bla-bla-bla</p>
-            <div class="comment-info">
-              <button class="comment-like active"></button>
-              <span class="comment-author">John Dow</span>
-              <span class="comment-day">2023/03/14 23:59</span>
-              <button class="comment-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-            </div>
-          </div>
-        </li>
-      </ul>
+      <ul class="comments-list"></ul>
 
       <form action="get" class="new-comment">
         <label class="comment-label">
@@ -39,10 +21,11 @@
           <input class="date-input" name="date" type="date" />
         </label>
         <label class="comment-label">
-          <textarea class="comment-input" placeholder="write comment here" name="comment"></textarea>
+          <textarea class="comment-input" placeholder="write comment here" name="comment-text"></textarea>
         </label>
         <p><button type="submit" class="comment-submit">Отправить</button></p>
       </form>
     </section>
+    <script src="./scripts.js"></script>
   </body>
 </html>
