@@ -5,6 +5,7 @@ const commentsArr = [
   { id: 1, author: 'Виталик', date: '2023-03-14 18:13', text: 'опрдукприабтмивалмивдоа влруд куакулдр ауар', isLiked: false },
   { id: 2, author: 'Krya-Krya', date: '2023-03-15 21:33', text: 'Blablablablablabla', isLiked: false },
 ];
+let currentDate = new Date();
 
 commentsCount.textContent = commentsArr.length;
 
@@ -19,14 +20,14 @@ commentsList.addEventListener('click', (e) => {
   }
 });
 
-commentsArr.forEach((el) => {
+const createItem = (data) => {
   let commentsListItem = document.createElement('li');
   commentsListItem.classList.add('comment');
   commentsList.append(commentsListItem);
 
   let commentText = document.createElement('p');
   commentText.classList.add('comment-text');
-  commentText.textContent = el.text;
+  commentText.textContent = data.text;
   commentsListItem.append(commentText);
 
   let commentWrapper = document.createElement('div');
@@ -34,53 +35,89 @@ commentsArr.forEach((el) => {
   commentsListItem.append(commentWrapper);
 
   let commentLikeBtn = document.createElement('button');
-  el.isLiked ? (commentLikeBtn.className = 'active comment-like') : (commentLikeBtn.className = 'comment-like');
+  data.isLiked ? (commentLikeBtn.className = 'active comment-like') : (commentLikeBtn.className = 'comment-like');
   commentWrapper.append(commentLikeBtn);
 
   let commentAuthor = document.createElement('span');
   commentAuthor.classList.add('comment-author');
-  commentAuthor.textContent = el.author;
+  commentAuthor.textContent = data.author;
   commentWrapper.append(commentAuthor);
 
-  let now = new Date();
-  let commentFullDate = new Date(el.date);
-  let index = el.date.indexOf(' ');
-  let time = el.date.slice(index);
+  let commentFullDate = new Date(data.date);
+  let index = data.date.indexOf(' ');
+  let time = data.date.slice(index);
   let commentDate = document.createElement('span');
   commentDate.classList.add('comment-day');
 
   commentDate.textContent =
-    now.getFullYear() == commentFullDate.getFullYear() && now.getMonth() == commentFullDate.getMonth() && now.getDate() == commentFullDate.getDate()
-      ? 'сегодня в ' + time
-      : now.getFullYear() == commentFullDate.getFullYear() &&
-        now.getMonth() == commentFullDate.getMonth() &&
-        now.getDate() - 1 == commentFullDate.getDate()
-      ? 'вчера в ' + time
-      : el.date;
+    currentDate.getFullYear() == commentFullDate.getFullYear() &&
+    currentDate.getMonth() == commentFullDate.getMonth() &&
+    currentDate.getDate() == commentFullDate.getDate()
+      ? 'сегодня, ' + time
+      : currentDate.getFullYear() == commentFullDate.getFullYear() &&
+        currentDate.getMonth() == commentFullDate.getMonth() &&
+        currentDate.getDate() - 1 == commentFullDate.getDate()
+      ? 'вчера, ' + time
+      : data.date;
 
   commentWrapper.append(commentDate);
 
   let commentDeleteBtn = document.createElement('button');
   commentDeleteBtn.classList.add('comment-delete');
   commentWrapper.append(commentDeleteBtn);
+};
+
+commentsArr.forEach((el) => {
+  createItem(el);
 });
 
 //добавление нового комментария
 
+const form = document.querySelector('.new-comment');
 const newCommentArea = document.querySelector('.comment-input');
+newCommentArea.value = '';
 const userName = document.querySelector('.name-input');
 const dateOfComment = document.querySelector('.date-input');
+//хотя я бы поговорила со страршими товарищами относительно того, стоит ли давать пользователю возможность выбора даты.
 
 const submitBtn = document.querySelector('.comment-submit');
-submitBtn.addEventListener('click', (e) => {
-  e.preventDefault;
-  if (!userName.value) {
-    document.querySelector('.name-input +.error').hidden = false;
-  }
-  return;
-  //commentsArr.push({ id: commentsArr.length, text: newCommentArea.value });
-});
 
-userName.oninput = function () {
-  document.querySelector('.name-input +.error').hidden = true;
+form.onsubmit = function (e) {
+  e.preventDefault();
+  if (!newCommentArea.value) {
+    document.querySelector('.comment-input +.error').hidden = false;
+    return false;
+  }
+
+  function createCommentDate() {
+    return (
+      currentDate.getFullYear() +
+      '-' +
+      (currentDate.getMonth() + 1) +
+      '-' +
+      currentDate.getDate() +
+      ' ' +
+      currentDate.getHours().toString().padStart(2, '0') +
+      ':' +
+      currentDate.getMinutes().toString().padStart(2, '0')
+    );
+  }
+
+  let date = dateOfComment.value
+    ? dateOfComment.value + ' ' + currentDate.getHours().toString().padStart(2, '0') + ':' + currentDate.getMinutes().toString().padStart(2, '0')
+    : createCommentDate();
+  commentsArr.push({ id: commentsArr.length, author: userName.value, date: date, text: newCommentArea.value, isLiked: false });
+
+  console.log(commentsArr);
+  createItem({ id: commentsArr.length, author: userName.value, text: newCommentArea.value, date: date, isLiked: false });
+
+  newCommentArea.value = '';
 };
+
+newCommentArea.addEventListener(
+  'input',
+  () => {
+    document.querySelector('.comment-input +.error').hidden = true;
+  },
+  { once: true }
+);

@@ -13,10 +13,9 @@
 
       <ul class="comments-list"></ul>
 
-      <form action="get" class="new-comment">
+      <form action="/handler/" method="POST" class="new-comment">
         <label class="comment-label">
-          <input class="name-input" placeholder="write username here" name="name" type="text" required autocomplete="off" />
-          <span class="error" hidden="true">Tell us your name, pleace</span>
+          <input class="name-input" placeholder="write username here" name="name" type="text" autocomplete="off" required />
         </label>
         <label class="comment-label">
           <input class="date-input" name="date" type="date" />
@@ -27,7 +26,7 @@
             >Our server don't like empty comments. Pleace, write something, otherwise he can go bananza and call T-1000</span
           >
         </label>
-        <p><button type="submit" class="comment-submit">Отправить</button></p>
+        <p><input type="submit" class="comment-submit" value="Отправить" /></p>
       </form>
     </section>
     <script src="./scripts.js"></script>
