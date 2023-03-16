@@ -106,13 +106,18 @@ form.onsubmit = function (e) {
   let date = dateOfComment.value
     ? dateOfComment.value + ' ' + currentDate.getHours().toString().padStart(2, '0') + ':' + currentDate.getMinutes().toString().padStart(2, '0')
     : createCommentDate();
-  commentsArr.push({ id: commentsArr.length, author: userName.value, date: date, text: newCommentArea.value, isLiked: false });
 
-  console.log(commentsArr);
+  commentsArr.push({ id: commentsArr.length, author: userName.value, date: date, text: newCommentArea.value, isLiked: false });
   createItem({ id: commentsArr.length, author: userName.value, text: newCommentArea.value, date: date, isLiked: false });
 
   newCommentArea.value = '';
 };
+
+document.addEventListener('keydown', function (e) {
+  if (e.code === 'Enter') {
+    form.onsubmit(e);
+  }
+});
 
 newCommentArea.addEventListener(
   'input',
